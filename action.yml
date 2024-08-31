@@ -1,7 +1,7 @@
 name: 'Local File Copy'
 description: |
-  A NodeJS GitHub action to search for files matching a regex pattern 
-  and copy them to another folder, with options to retain the 
+  A NodeJS GitHub action to search for files matching a regex pattern
+  and copy them to another folder, with options to retain the
   directory structure or flatten it.
 author: 'actuarysailor'
 branding:
