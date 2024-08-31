@@ -17,7 +17,7 @@ jobs:
           sourceDirectory: ./test/source
           destinationDirectory: ./test/destination
           # fileFilter:  # id of input
-          flattenDirectories:  true
+          flattenDirectories: true
 
       - run: |
-          echo "markdown: ${{ steps.gha.outputs.copied-files }}"
+          echo "markdown: ${{ steps.gha.outputs.copied-files }} >> $GITHUB_STEP_SUMMARY"

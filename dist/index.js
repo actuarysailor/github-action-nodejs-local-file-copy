@@ -26675,6 +26675,10 @@ var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
+;// CONCATENATED MODULE: external "node:fs"
+const external_node_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs");
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 ;// CONCATENATED MODULE: ./src/utils/sleep.ts
 const sleep = (milliseconds) => {
     return new Promise(resolve => {
@@ -26682,10 +26686,6 @@ const sleep = (milliseconds) => {
     });
 };
 
-;// CONCATENATED MODULE: external "node:fs"
-const external_node_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs");
-;// CONCATENATED MODULE: external "node:path"
-const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 ;// CONCATENATED MODULE: ./src/action.ts
 
 
@@ -26698,14 +26698,17 @@ class Action {
         this.outputs = dependencies.outputs;
     }
     async run(inputs) {
-        const fileFilter = inputs.fileFilter || '**/*';
+        const fileFilter = inputs.fileFilter || "**/*";
         const sourceDirectory = inputs.sourceDirectory;
         const destinationDirectory = inputs.destinationDirectory;
         this.logger.info(`Copying files matching the pattern "${fileFilter}" from "${sourceDirectory}" to "${destinationDirectory}"`);
-        const files = external_node_fs_namespaceObject.readdirSync(inputs.sourceDirectory, { withFileTypes: true });
+        const files = external_node_fs_namespaceObject.readdirSync(inputs.sourceDirectory, {
+            withFileTypes: true
+        });
         const copiedFiles = [];
         for (const file of files) {
-            if (file.isFile() && (!inputs.fileFilter || file.name.match(inputs.fileFilter))) {
+            if (file.isFile() &&
+                (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))) {
                 const sourcePath = external_node_path_namespaceObject.join(inputs.sourceDirectory, file.name);
                 const destinationPath = inputs.flattenDirectories
                     ? external_node_path_namespaceObject.join(inputs.destinationDirectory, file.name)

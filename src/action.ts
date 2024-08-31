@@ -1,9 +1,9 @@
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { Inputs } from "./inputs/inputs";
 import { Logger } from "./logger/logger";
 import { Outputs } from "./outputs/outputs";
 import { sleep } from "./utils/sleep";
-import * as fs from "node:fs";
-import * as path from "node:path";
 
 export class Action {
   private readonly logger;
@@ -15,21 +15,31 @@ export class Action {
   }
 
   async run(inputs: Inputs) {
-    const fileFilter = inputs.fileFilter || '**/*';
+    const fileFilter = inputs.fileFilter || "**/*";
     const sourceDirectory = inputs.sourceDirectory;
     const destinationDirectory = inputs.destinationDirectory;
 
-    this.logger.info(`Copying files matching the pattern "${fileFilter}" from "${sourceDirectory}" to "${destinationDirectory}"`);
+    this.logger.info(
+      `Copying files matching the pattern "${fileFilter}" from "${sourceDirectory}" to "${destinationDirectory}"`,
+    );
 
-    const files = fs.readdirSync(inputs.sourceDirectory, { withFileTypes: true });
+    const files = fs.readdirSync(inputs.sourceDirectory, {
+      withFileTypes: true
+    });
     const copiedFiles: { destinationPath: string; count: number }[] = [];
 
     for (const file of files) {
-      if (file.isFile() && (!inputs.fileFilter || file.name.match(inputs.fileFilter))) {
+      if (
+        file.isFile() &&
+        (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))
+      ) {
         const sourcePath = path.join(inputs.sourceDirectory, file.name);
         const destinationPath = inputs.flattenDirectories
           ? path.join(inputs.destinationDirectory, file.name)
-          : path.join(inputs.destinationDirectory, path.relative(inputs.sourceDirectory, sourcePath));
+          : path.join(
+            inputs.destinationDirectory,
+            path.relative(inputs.sourceDirectory, sourcePath)
+          );
 
         const destinationDir = path.dirname(destinationPath);
         if (!fs.existsSync(destinationDir)) {

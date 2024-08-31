@@ -9,19 +9,19 @@ branding:
   color: 'blue'
 
 inputs:
-  sourceDirectory:  # id of input
+  source-directory:  # id of input
     description: 'Source directory to copy files from'
     required: true
     default: '$PWD'
-  destinationDirectory:  # id of input
+  destination-directory:  # id of input
     description: 'Target directory to copy files to'
     required: true
     default: 'C:\Temp'
-  fileFilter:  # id of input
+  file-filter:  # id of input
     description: 'Regex pattern  to use in filtering files to be copied'
     required: false
     default: '[^\r\n\t\f]+'
-  flattenDirectories:  # id of input
+  flatten-directories:  # id of input
     description: 'Boolean value to determine whether to retain directory tree or flatten to a single folder'
     required: false
     default: 'false'
