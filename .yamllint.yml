@@ -1,0 +1,17 @@
+extends: default
+
+ignore: |
+  node_modules/
+
+rules:
+  document-start:
+    present: false
+  line-length:
+    ignore: |
+      /.github/actions/**/*.yml
+      /.github/workflows/*.yml
+      /.github/settings.yml
+      /action.yml
+  truthy:
+    ignore: |
+      /.github/workflows/*.yml
