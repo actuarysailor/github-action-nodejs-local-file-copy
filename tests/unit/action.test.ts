@@ -37,7 +37,7 @@ describe("Action", () => {
       // Mock the file system
       vi.spyOn(glob, "sync").mockReturnValue(["file1.txt", "file2.txt"]);
       vi.spyOn(fs, "existsSync").mockReturnValue(true);
-      vi.spyOn(fs, "mkdirSync").mockImplementation(() => undefined);
+      vi.spyOn(fs, "mkdirSync").mockImplementation(() => "");
       vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
 
       await action.run(inputs);
@@ -78,7 +78,7 @@ describe("Action", () => {
         "file3.js",
       ]);
       vi.spyOn(fs, "existsSync").mockReturnValue(true);
-      vi.spyOn(fs, "mkdirSync").mockImplementation(() => undefined);
+      vi.spyOn(fs, "mkdirSync").mockImplementation(() => "");
       vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
 
       await action.run(inputs);
