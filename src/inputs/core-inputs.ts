@@ -16,6 +16,6 @@ export class CoreInputs implements Inputs {
 
   get flattenDirectories(): boolean {
     const input = getInput("flatten-directories");
-    return input ? input.toLowerCase() === 'true' : false;
+    return input ? input.toLowerCase() === "true" : false;
   }
 }

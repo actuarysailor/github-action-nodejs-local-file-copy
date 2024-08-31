@@ -21,7 +21,9 @@ describe("CoreInputs", () => {
       const sourceDirectory = inputs.sourceDirectory;
 
       expect(sourceDirectory).toBe(expectedSourceDirectory);
-      expect(core.getInput).toHaveBeenCalledWith("source-directory", { required: true });
+      expect(core.getInput).toHaveBeenCalledWith("source-directory", {
+        required: true,
+      });
     });
   });
 
@@ -34,7 +36,9 @@ describe("CoreInputs", () => {
       const destinationDirectory = inputs.destinationDirectory;
 
       expect(destinationDirectory).toBe(expectedDestinationDirectory);
-      expect(core.getInput).toHaveBeenCalledWith("destination-directory", { required: true });
+      expect(core.getInput).toHaveBeenCalledWith("destination-directory", {
+        required: true,
+      });
     });
   });
 

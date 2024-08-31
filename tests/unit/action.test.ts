@@ -1,6 +1,5 @@
 import { vi } from "vitest";
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "node:fs";
 import * as glob from 'glob';
 
 import { Action } from "@/src/action";
@@ -35,10 +34,10 @@ describe("Action", () => {
       };
 
       // Mock the file system
-      vi.spyOn(glob, 'sync').mockReturnValue(['file1.txt', 'file2.txt']);
-      vi.spyOn(fs, 'existsSync').mockReturnValue(true);
-      vi.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined);
-      vi.spyOn(fs, 'copyFileSync').mockImplementation(() => {});
+      vi.spyOn(glob, "sync").mockReturnValue(["file1.txt", "file2.txt"]);
+      vi.spyOn(fs, "existsSync").mockReturnValue(true);
+      vi.spyOn(fs, "mkdirSync").mockImplementation(() => undefined);
+      vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
 
       await action.run(inputs);
 
@@ -48,9 +47,9 @@ describe("Action", () => {
       const totalFilesCopied = copiedFilesArray.reduce((sum, entry) => sum + parseInt(entry[1]), 0);
 
       // Ensure no file has a count more than 1
-      copiedFilesArray.forEach(entry => {
+      for (const entry of copiedFilesArray) {
         expect(parseInt(entry[1])).toBeLessThanOrEqual(1);
-      });
+      }
 
       // Ensure total number of files copied matches the number of files discovered
       expect(totalFilesCopied).toBe(2);
@@ -66,10 +65,10 @@ describe("Action", () => {
       };
 
       // Mock the file system
-      vi.spyOn(glob, 'sync').mockReturnValue(['file1.txt', 'file2.txt', 'file3.js']);
-      vi.spyOn(fs, 'existsSync').mockReturnValue(true);
-      vi.spyOn(fs, 'mkdirSync').mockImplementation(() => undefined);
-      vi.spyOn(fs, 'copyFileSync').mockImplementation(() => {});
+      vi.spyOn(glob, "sync").mockReturnValue(["file1.txt", "file2.txt", "file3.js"]);
+      vi.spyOn(fs, "existsSync").mockReturnValue(true);
+      vi.spyOn(fs, "mkdirSync").mockImplementation(() => undefined);
+      vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
 
       await action.run(inputs);
 
@@ -79,9 +78,9 @@ describe("Action", () => {
       const totalFilesCopied = copiedFilesArray.reduce((sum, entry) => sum + parseInt(entry[1]), 0);
 
       // Ensure no file has a count more than 1
-      copiedFilesArray.forEach(entry => {
+      for (const entry of copiedFilesArray) {
         expect(parseInt(entry[1])).toBeLessThanOrEqual(1);
-      });
+      }
 
       // Ensure total number of files copied matches the number of files discovered
       expect(totalFilesCopied).toBe(3);

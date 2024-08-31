@@ -2,9 +2,8 @@ import { Inputs } from "./inputs/inputs";
 import { Logger } from "./logger/logger";
 import { Outputs } from "./outputs/outputs";
 import { sleep } from "./utils/sleep";
-import * as fs from 'fs';
-import * as path from 'path';
-import * as glob from 'glob';
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 export class Action {
   private readonly logger;
@@ -16,38 +15,46 @@ export class Action {
   }
 
   async run(inputs: Inputs) {
-    this.logger.info(`Copying files matching the pattern "${inputs.fileFilter || '**/*'}" from "${inputs.sourceDirectory}" to "${inputs.destinationDirectory}"`);
+    const fileFilter = inputs.fileFilter || '**/*';
+    const sourceDirectory = inputs.sourceDirectory;
+    const destinationDirectory = inputs.destinationDirectory;
 
-    const files = glob.sync(inputs.fileFilter || '**/*', { cwd: inputs.sourceDirectory });
-    const copiedFiles: { destinationPath: string, count: number }[] = [];
+    this.logger.info(`Copying files matching the pattern "${fileFilter}" from "${sourceDirectory}" to "${destinationDirectory}"`);
 
-    files.forEach(file => {
-      const relativePath = path.relative(inputs.sourceDirectory, file);
-      const destinationPath = inputs.flattenDirectories
-        ? path.join(inputs.destinationDirectory, path.basename(file))
-        : path.join(inputs.destinationDirectory, relativePath);
+    const files = fs.readdirSync(inputs.sourceDirectory, { withFileTypes: true });
+    const copiedFiles: { destinationPath: string; count: number }[] = [];
 
-      const destinationDir = path.dirname(destinationPath);
-      if (!fs.existsSync(destinationDir)) {
-        fs.mkdirSync(destinationDir, { recursive: true });
+    for (const file of files) {
+      if (file.isFile() && (!inputs.fileFilter || file.name.match(inputs.fileFilter))) {
+        const sourcePath = path.join(inputs.sourceDirectory, file.name);
+        const destinationPath = inputs.flattenDirectories
+          ? path.join(inputs.destinationDirectory, file.name)
+          : path.join(inputs.destinationDirectory, path.relative(inputs.sourceDirectory, sourcePath));
+
+        const destinationDir = path.dirname(destinationPath);
+        if (!fs.existsSync(destinationDir)) {
+          fs.mkdirSync(destinationDir, { recursive: true });
+        }
+
+        fs.copyFileSync(sourcePath, destinationPath);
+        this.logger.info(`Copied '${sourcePath}' to '${destinationPath}'`);
+
+        const existingEntry = copiedFiles.find(
+          entry => entry.destinationPath === destinationPath
+        );
+        if (existingEntry) {
+          existingEntry.count += 1;
+        } else {
+          copiedFiles.push({ destinationPath: destinationPath, count: 1 });
+        }
       }
-
-      fs.copyFileSync(file, destinationPath);
-      this.logger.info(`Copied '${file}' to '${destinationPath}'`);
-
-      const existingEntry = copiedFiles.find(entry => entry.destinationPath === destinationPath);
-      if (existingEntry) {
-        existingEntry.count += 1;
-      } else {
-        copiedFiles.push({ destinationPath: destinationPath, count: 1 });
-      }
-    });
+    };
 
     // Generate markdown table
     let markdownTable = "| Destination Path | Files Copied |\n| --- | --- |\n";
-    copiedFiles.forEach(entry => {
+    for (const entry of copiedFiles) {
       markdownTable += `| ${entry.destinationPath} | ${entry.count} |\n`;
-    });
+    }
 
     this.outputs.save("copiedFiles", markdownTable);
     this.logger.info("Files copied:\n" + markdownTable);
