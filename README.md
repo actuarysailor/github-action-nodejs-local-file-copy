@@ -8,7 +8,9 @@
 <!-- action-docs-description source="action.yml" -->
 ### Description
 
-Template for new Github Actions based on Typescript with the Best Practices and Ready to be Released
+A NodeJS GitHub action to search for files matching a regex pattern 
+and copy them to another folder, with options to retain the 
+directory structure or flatten it.
 <!-- action-docs-description source="action.yml" -->
 </p>
 
@@ -49,7 +51,10 @@ jobs:
 
 | name | description | required | default |
 | --- | --- | --- | --- |
-| `name` | <p>Name the action will use to say Hello.</p> | `false` | `""` |
+| `sourceDirectory` | <p>Source directory to copy files from</p> | `true` | `$PWD` |
+| `destinationDirectory` | <p>Target directory to copy files to</p> | `true` | `C:\Temp` |
+| `fileFilter` | <p>Regex pattern  to use in filtering files to be copied</p> | `false` | `[^\r\n\t\f]+` |
+| `flattenDirectories` | <p>Boolean value to determine whether to retain directory tree or flatten to a single folder</p> | `false` | `false` |
 <!-- action-docs-inputs source="action.yml" -->
 
 <!-- action-docs-outputs source="action.yml" -->
@@ -57,7 +62,7 @@ jobs:
 
 | name | description |
 | --- | --- |
-| `message` | <p>Hello world message</p> |
+| `copied-files` | <p>List of files copied and their paths</p> |
 <!-- action-docs-outputs source="action.yml" -->
 
 <!-- action-docs-runs source="action.yml" -->
