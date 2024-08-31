@@ -1,5 +1,6 @@
-import * as fs from "node:fs";
-import * as path from "node:path";
+import { default as fs } from "node:fs";
+import { default as path } from "node:path";
+
 import { Inputs } from "./inputs/inputs";
 import { Logger } from "./logger/logger";
 import { Outputs } from "./outputs/outputs";
@@ -24,7 +25,7 @@ export class Action {
     );
 
     const files = fs.readdirSync(inputs.sourceDirectory, {
-      withFileTypes: true
+      withFileTypes: true,
     });
     const copiedFiles: { destinationPath: string; count: number }[] = [];
 
@@ -33,24 +34,23 @@ export class Action {
         file.isFile() &&
         (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))
       ) {
-        const sourcePath = path.join(inputs.sourceDirectory, file.name);
         const destinationPath = inputs.flattenDirectories
           ? path.join(inputs.destinationDirectory, file.name)
           : path.join(
-            inputs.destinationDirectory,
-            path.relative(inputs.sourceDirectory, sourcePath)
-          );
+              inputs.destinationDirectory,
+              path.relative(inputs.sourceDirectory, file.path),
+            );
 
         const destinationDir = path.dirname(destinationPath);
         if (!fs.existsSync(destinationDir)) {
           fs.mkdirSync(destinationDir, { recursive: true });
         }
 
-        fs.copyFileSync(sourcePath, destinationPath);
-        this.logger.info(`Copied '${sourcePath}' to '${destinationPath}'`);
+        fs.copyFileSync(file.path, destinationPath);
+        this.logger.info(`Copied '${file.path}' to '${destinationPath}'`);
 
         const existingEntry = copiedFiles.find(
-          entry => entry.destinationPath === destinationPath
+          entry => entry.destinationPath === destinationPath,
         );
         if (existingEntry) {
           existingEntry.count += 1;
@@ -58,7 +58,7 @@ export class Action {
           copiedFiles.push({ destinationPath: destinationPath, count: 1 });
         }
       }
-    };
+    }
 
     // Generate markdown table
     let markdownTable = "| Destination Path | Files Copied |\n| --- | --- |\n";

@@ -14,10 +14,10 @@ jobs:
         id: gha
         uses: ./
         with:
-          sourceDirectory: ./test/source
-          destinationDirectory: ./test/destination
-          # fileFilter:  # id of input
-          flattenDirectories: true
+          source-directory: ./test/source
+          destination-directory: ./test/destination
+          # file-filter:  # id of input
+          flatten-directories: true
 
       - run: |
           echo "markdown: ${{ steps.gha.outputs.copied-files }} >> $GITHUB_STEP_SUMMARY"

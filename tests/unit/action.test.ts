@@ -1,6 +1,6 @@
 import { vi } from "vitest";
 import * as fs from "node:fs";
-import * as glob from 'glob';
+import * as glob from "glob";
 
 import { Action } from "@/src/action";
 import { Inputs } from "@/src/inputs/inputs";
@@ -43,12 +43,18 @@ describe("Action", () => {
 
       // Validate copied files
       const copiedFiles = outputs.getSavedOutput("copiedFiles");
-      const copiedFilesArray = copiedFiles.split('\n').slice(2).map(line => line.split('|').map(cell => cell.trim()));
-      const totalFilesCopied = copiedFilesArray.reduce((sum, entry) => sum + parseInt(entry[1]), 0);
+      const copiedFilesArray = copiedFiles
+        .split("\n")
+        .slice(2)
+        .map(line => line.split("|").map(cell => cell.trim()));
+      const totalFilesCopied = copiedFilesArray.reduce(
+        (sum, entry) => sum + Number.parseInt(entry[1]),
+        0,
+      );
 
       // Ensure no file has a count more than 1
       for (const entry of copiedFilesArray) {
-        expect(parseInt(entry[1])).toBeLessThanOrEqual(1);
+        expect(Number.parseInt(entry[1])).toBeLessThanOrEqual(1);
       }
 
       // Ensure total number of files copied matches the number of files discovered
@@ -65,7 +71,11 @@ describe("Action", () => {
       };
 
       // Mock the file system
-      vi.spyOn(glob, "sync").mockReturnValue(["file1.txt", "file2.txt", "file3.js"]);
+      vi.spyOn(glob, "sync").mockReturnValue([
+        "file1.txt",
+        "file2.txt",
+        "file3.js",
+      ]);
       vi.spyOn(fs, "existsSync").mockReturnValue(true);
       vi.spyOn(fs, "mkdirSync").mockImplementation(() => undefined);
       vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
@@ -74,12 +84,18 @@ describe("Action", () => {
 
       // Validate copied files
       const copiedFiles = outputs.getSavedOutput("copiedFiles");
-      const copiedFilesArray = copiedFiles.split('\n').slice(2).map(line => line.split('|').map(cell => cell.trim()));
-      const totalFilesCopied = copiedFilesArray.reduce((sum, entry) => sum + parseInt(entry[1]), 0);
+      const copiedFilesArray = copiedFiles
+        .split("\n")
+        .slice(2)
+        .map(line => line.split("|").map(cell => cell.trim()));
+      const totalFilesCopied = copiedFilesArray.reduce(
+        (sum, entry) => sum + Number.parseInt(entry[1]),
+        0,
+      );
 
       // Ensure no file has a count more than 1
       for (const entry of copiedFilesArray) {
-        expect(parseInt(entry[1])).toBeLessThanOrEqual(1);
+        expect(Number.parseInt(entry[1])).toBeLessThanOrEqual(1);
       }
 
       // Ensure total number of files copied matches the number of files discovered

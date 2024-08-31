@@ -11,12 +11,12 @@ branding:
 inputs:
   source-directory:  # id of input
     description: 'Source directory to copy files from'
-    required: true
-    default: '$PWD'
+    required: false
+    default: './test/source'
   destination-directory:  # id of input
     description: 'Target directory to copy files to'
     required: true
-    default: 'C:\Temp'
+    default: './test/destination'
   file-filter:  # id of input
     description: 'Regex pattern  to use in filtering files to be copied'
     required: false
