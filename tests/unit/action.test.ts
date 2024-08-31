@@ -1,6 +1,7 @@
-import { vi } from "vitest";
 import * as fs from "node:fs";
+
 import * as glob from "glob";
+import { vi } from "vitest";
 
 import { Action } from "@/src/action";
 import { Inputs } from "@/src/inputs/inputs";
@@ -27,8 +28,8 @@ describe("Action", () => {
   describe("When the fileFilter input is provided", () => {
     it("should copy files matching the pattern", async () => {
       const inputs: Inputs = {
-        sourceDirectory: "test/source",
-        destinationDirectory: "test/destination",
+        sourceDirectory: "tests/source",
+        destinationDirectory: "tests/destination",
         fileFilter: "*.txt",
         flattenDirectories: false,
       };
@@ -65,8 +66,8 @@ describe("Action", () => {
   describe("When the fileFilter input is not provided", () => {
     it("should copy all files beneath source directory", async () => {
       const inputs: Inputs = {
-        sourceDirectory: "test/source",
-        destinationDirectory: "test/destination",
+        sourceDirectory: "tests/source",
+        destinationDirectory: "tests/destination",
         flattenDirectories: false,
       };
 

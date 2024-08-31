@@ -26664,6 +26664,35 @@ module.exports = parseParams
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/compat get default export */
+/******/ (() => {
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__nccwpck_require__.n = (module) => {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__nccwpck_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__nccwpck_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
 /******/ /* webpack/runtime/compat */
 /******/ 
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
@@ -26677,8 +26706,10 @@ var __webpack_exports__ = {};
 var core = __nccwpck_require__(2186);
 ;// CONCATENATED MODULE: external "node:fs"
 const external_node_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs");
+var external_node_fs_default = /*#__PURE__*/__nccwpck_require__.n(external_node_fs_namespaceObject);
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+var external_node_path_default = /*#__PURE__*/__nccwpck_require__.n(external_node_path_namespaceObject);
 ;// CONCATENATED MODULE: ./src/utils/sleep.ts
 const sleep = (milliseconds) => {
     return new Promise(resolve => {
@@ -26702,23 +26733,22 @@ class Action {
         const sourceDirectory = inputs.sourceDirectory;
         const destinationDirectory = inputs.destinationDirectory;
         this.logger.info(`Copying files matching the pattern "${fileFilter}" from "${sourceDirectory}" to "${destinationDirectory}"`);
-        const files = external_node_fs_namespaceObject.readdirSync(inputs.sourceDirectory, {
-            withFileTypes: true
+        const files = external_node_fs_default().readdirSync(inputs.sourceDirectory, {
+            withFileTypes: true,
         });
         const copiedFiles = [];
         for (const file of files) {
             if (file.isFile() &&
                 (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))) {
-                const sourcePath = external_node_path_namespaceObject.join(inputs.sourceDirectory, file.name);
                 const destinationPath = inputs.flattenDirectories
-                    ? external_node_path_namespaceObject.join(inputs.destinationDirectory, file.name)
-                    : external_node_path_namespaceObject.join(inputs.destinationDirectory, external_node_path_namespaceObject.relative(inputs.sourceDirectory, sourcePath));
-                const destinationDir = external_node_path_namespaceObject.dirname(destinationPath);
-                if (!external_node_fs_namespaceObject.existsSync(destinationDir)) {
-                    external_node_fs_namespaceObject.mkdirSync(destinationDir, { recursive: true });
+                    ? external_node_path_default().join(inputs.destinationDirectory, file.name)
+                    : external_node_path_default().join(inputs.destinationDirectory, external_node_path_default().relative(inputs.sourceDirectory, file.path));
+                const destinationDir = external_node_path_default().dirname(destinationPath);
+                if (!external_node_fs_default().existsSync(destinationDir)) {
+                    external_node_fs_default().mkdirSync(destinationDir, { recursive: true });
                 }
-                external_node_fs_namespaceObject.copyFileSync(sourcePath, destinationPath);
-                this.logger.info(`Copied '${sourcePath}' to '${destinationPath}'`);
+                external_node_fs_default().copyFileSync(file.path, destinationPath);
+                this.logger.info(`Copied '${file.path}' to '${destinationPath}'`);
                 const existingEntry = copiedFiles.find(entry => entry.destinationPath === destinationPath);
                 if (existingEntry) {
                     existingEntry.count += 1;
@@ -26728,7 +26758,6 @@ class Action {
                 }
             }
         }
-        ;
         // Generate markdown table
         let markdownTable = "| Destination Path | Files Copied |\n| --- | --- |\n";
         for (const entry of copiedFiles) {

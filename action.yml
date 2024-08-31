@@ -12,11 +12,11 @@ inputs:
   source-directory:  # id of input
     description: 'Source directory to copy files from'
     required: false
-    default: './test/source'
+    default: './tests/source'
   destination-directory:  # id of input
     description: 'Target directory to copy files to'
     required: true
-    default: './test/destination'
+    default: './tests/destination'
   file-filter:  # id of input
     description: 'Regex pattern  to use in filtering files to be copied'
     required: false

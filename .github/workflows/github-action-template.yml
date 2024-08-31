@@ -14,8 +14,8 @@ jobs:
         id: gha
         uses: ./
         with:
-          source-directory: ./test/source
-          destination-directory: ./test/destination
+          source-directory: ./tests/source
+          destination-directory: ./tests/destination
           # file-filter:  # id of input
           flatten-directories: true
 
