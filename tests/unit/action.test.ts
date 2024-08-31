@@ -30,15 +30,21 @@ describe("Action", () => {
       const inputs: Inputs = {
         sourceDirectory: "tests/source",
         destinationDirectory: "tests/destination",
-        fileFilter: "*.txt",
+        fileFilter: String.raw`.*\.txt`,
         flattenDirectories: false,
       };
 
       // Mock the file system
       vi.spyOn(glob, "sync").mockReturnValue(["file1.txt", "file2.txt"]);
-      vi.spyOn(fs, "existsSync").mockReturnValue(true);
-      vi.spyOn(fs, "mkdirSync").mockImplementation(() => "");
-      vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
+      if (!fs.existsSync) {
+        vi.spyOn(fs, "existsSync").mockReturnValue(true);
+      }
+      if (!fs.mkdirSync) {
+        vi.spyOn(fs, "mkdirSync").mockImplementation(() => "");
+      }
+      if (!fs.copyFileSync) {
+        vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
+      }
 
       await action.run(inputs);
 
@@ -75,11 +81,17 @@ describe("Action", () => {
       vi.spyOn(glob, "sync").mockReturnValue([
         "file1.txt",
         "file2.txt",
-        "file3.js",
+        "file3.md",
       ]);
-      vi.spyOn(fs, "existsSync").mockReturnValue(true);
-      vi.spyOn(fs, "mkdirSync").mockImplementation(() => "");
-      vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
+      if (!fs.existsSync) {
+        vi.spyOn(fs, "existsSync").mockReturnValue(true);
+      }
+      if (!fs.mkdirSync) {
+        vi.spyOn(fs, "mkdirSync").mockImplementation(() => "");
+      }
+      if (!fs.copyFileSync) {
+        vi.spyOn(fs, "copyFileSync").mockImplementation(() => {});
+      }
 
       await action.run(inputs);
 

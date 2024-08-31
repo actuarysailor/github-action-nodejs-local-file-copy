@@ -44,7 +44,7 @@ describe("CoreInputs", () => {
 
   describe("fileFilter", () => {
     it('should return the value of "file-filter" input', () => {
-      const expectedFileFilter = "*.txt";
+      const expectedFileFilter = String.raw`.*\.txt`;
       (core.getInput as Mock).mockReturnValueOnce(expectedFileFilter);
 
       const inputs = new CoreInputs();
