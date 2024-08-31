@@ -8,8 +8,8 @@
 <!-- action-docs-description source="action.yml" -->
 ### Description
 
-A NodeJS GitHub action to search for files matching a regex pattern 
-and copy them to another folder, with options to retain the 
+A NodeJS GitHub action to search for files matching a regex pattern
+and copy them to another folder, with options to retain the
 directory structure or flatten it.
 <!-- action-docs-description source="action.yml" -->
 </p>
