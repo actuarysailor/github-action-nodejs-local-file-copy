@@ -51,10 +51,10 @@ jobs:
 
 | name | description | required | default |
 | --- | --- | --- | --- |
-| `sourceDirectory` | <p>Source directory to copy files from</p> | `true` | `$PWD` |
-| `destinationDirectory` | <p>Target directory to copy files to</p> | `true` | `C:\Temp` |
-| `fileFilter` | <p>Regex pattern  to use in filtering files to be copied</p> | `false` | `[^\r\n\t\f]+` |
-| `flattenDirectories` | <p>Boolean value to determine whether to retain directory tree or flatten to a single folder</p> | `false` | `false` |
+| `source-directory` | <p>Source directory to copy files from</p> | `true` | `$PWD` |
+| `destination-directory` | <p>Target directory to copy files to</p> | `true` | `C:\Temp` |
+| `file-filter` | <p>Regex pattern  to use in filtering files to be copied</p> | `false` | `[^\r\n\t\f]+` |
+| `flatten-directories` | <p>Boolean value to determine whether to retain directory tree or flatten to a single folder</p> | `false` | `false` |
 <!-- action-docs-inputs source="action.yml" -->
 
 <!-- action-docs-outputs source="action.yml" -->
