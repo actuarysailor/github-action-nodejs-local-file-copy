@@ -51,8 +51,8 @@ jobs:
 
 | name | description | required | default |
 | --- | --- | --- | --- |
-| `source-directory` | <p>Source directory to copy files from</p> | `false` | `./test/source` |
-| `destination-directory` | <p>Target directory to copy files to</p> | `true` | `./test/destination` |
+| `source-directory` | <p>Source directory to copy files from</p> | `false` | `./tests/source` |
+| `destination-directory` | <p>Target directory to copy files to</p> | `true` | `./tests/destination` |
 | `file-filter` | <p>Regex pattern  to use in filtering files to be copied</p> | `false` | `[^\r\n\t\f]+` |
 | `flatten-directories` | <p>Boolean value to determine whether to retain directory tree or flatten to a single folder</p> | `false` | `false` |
 <!-- action-docs-inputs source="action.yml" -->
