@@ -1,18 +1,34 @@
-name: 'github-action-nodejs-template'
-description: 'Template for new Github Actions based on Typescript with the Best Practices and Ready to be Released'
-author: 'Albert Hernandez'
+name: 'Local File Copy'
+description: |
+  A NodeJS GitHub action to search for files matching a regex pattern
+  and copy them to another folder, with options to retain the
+  directory structure or flatten it.
+author: 'actuarysailor'
 branding:
   icon: 'package'
   color: 'blue'
 
 inputs:
-  name:
-    description: 'Name the action will use to say Hello.'
+  source-directory:  # id of input
+    description: 'Source directory to copy files from'
     required: false
+    default: './tests/source'
+  destination-directory:  # id of input
+    description: 'Target directory to copy files to'
+    required: true
+    default: './tests/destination'
+  file-filter:  # id of input
+    description: 'Regex pattern  to use in filtering files to be copied'
+    required: false
+    default: '[^\r\n\t\f]+'
+  flatten-directories:  # id of input
+    description: 'Boolean value to determine whether to retain directory tree or flatten to a single folder'
+    required: false
+    default: 'false'
 
 outputs:
-  message:
-    description: 'Hello world message'
+  copied-files:
+    description: 'List of files copied and their paths'
 
 runs:
   using: 'node20'

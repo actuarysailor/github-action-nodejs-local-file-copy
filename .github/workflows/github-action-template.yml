@@ -4,15 +4,20 @@ on:
   push:
 
 jobs:
-  github-action-nodejs-template:
+  gha:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛬
         uses: actions/checkout@v4
-      - name: Github action template 🤩
-        id: github-action-nodejs-template
+
+      - name: Integration Testing 🤩
+        id: gha
         uses: ./
         with:
-          name: "Devs"
+          source-directory: ./tests/source
+          destination-directory: ./tests/destination
+          # file-filter:  # id of input
+          flatten-directories: true
+
       - run: |
-          echo "Message: ${{ steps.github-action-nodejs-template.outputs.message }}"
+          echo "markdown: ${{ steps.gha.outputs.copied-files }} >> $GITHUB_STEP_SUMMARY"

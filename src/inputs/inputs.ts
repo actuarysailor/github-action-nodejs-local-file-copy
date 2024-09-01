@@ -1,3 +1,6 @@
 export interface Inputs {
-  readonly name?: string;
+  readonly sourceDirectory: string;
+  readonly destinationDirectory: string;
+  readonly fileFilter?: string;
+  readonly flattenDirectories?: boolean;
 }

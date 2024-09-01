@@ -9,10 +9,12 @@ jobs:
     steps:
       - name: Checkout 🛬
         uses: actions/checkout@v4
+
       - name: Download actionlint ⚙️
         id: get_actionlint
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.26
         shell: bash
+
       - name: Check workflow files 💅🏻
         run: ${{ steps.get_actionlint.outputs.executable }} -color
         shell: bash
