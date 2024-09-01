@@ -34,11 +34,12 @@ export class Action {
         file.isFile() &&
         (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))
       ) {
+        const sourcePath = path.join(file.path, file.name);
         const destinationPath = inputs.flattenDirectories
           ? path.join(inputs.destinationDirectory, file.name)
           : path.join(
               inputs.destinationDirectory,
-              path.relative(inputs.sourceDirectory, file.path),
+              path.relative(inputs.sourceDirectory, sourcePath),
             );
 
         const destinationDir = path.dirname(destinationPath);
@@ -46,8 +47,8 @@ export class Action {
           fs.mkdirSync(destinationDir, { recursive: true });
         }
 
-        fs.copyFileSync(file.path, destinationPath);
-        this.logger.info(`Copied '${file.path}' to '${destinationPath}'`);
+        fs.copyFileSync(sourcePath, destinationPath);
+        this.logger.info(`Copied '${sourcePath}' to '${destinationPath}'`);
 
         const existingEntry = copiedFiles.find(
           entry => entry.destinationPath === destinationPath,

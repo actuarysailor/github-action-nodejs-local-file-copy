@@ -26740,15 +26740,16 @@ class Action {
         for (const file of files) {
             if (file.isFile() &&
                 (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))) {
+                const sourcePath = external_node_path_default().join(file.path, file.name);
                 const destinationPath = inputs.flattenDirectories
                     ? external_node_path_default().join(inputs.destinationDirectory, file.name)
-                    : external_node_path_default().join(inputs.destinationDirectory, external_node_path_default().relative(inputs.sourceDirectory, file.path));
+                    : external_node_path_default().join(inputs.destinationDirectory, external_node_path_default().relative(inputs.sourceDirectory, sourcePath));
                 const destinationDir = external_node_path_default().dirname(destinationPath);
                 if (!external_node_fs_default().existsSync(destinationDir)) {
                     external_node_fs_default().mkdirSync(destinationDir, { recursive: true });
                 }
-                external_node_fs_default().copyFileSync(file.path, destinationPath);
-                this.logger.info(`Copied '${file.path}' to '${destinationPath}'`);
+                external_node_fs_default().copyFileSync(sourcePath, destinationPath);
+                this.logger.info(`Copied '${sourcePath}' to '${destinationPath}'`);
                 const existingEntry = copiedFiles.find(entry => entry.destinationPath === destinationPath);
                 if (existingEntry) {
                     existingEntry.count += 1;

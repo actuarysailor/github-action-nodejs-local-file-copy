@@ -51,9 +51,15 @@ describe("Action", () => {
       // Validate copied files
       const copiedFiles = outputs.getSavedOutput("copiedFiles");
       const copiedFilesArray = copiedFiles
+        .trim()
         .split("\n")
         .slice(2)
-        .map(line => line.split("|").map(cell => cell.trim()));
+        .map(line =>
+          line
+            .split("|")
+            .map(cell => cell.trim())
+            .filter(cell => cell !== ""),
+        );
       const totalFilesCopied = copiedFilesArray.reduce(
         (sum, entry) => sum + Number.parseInt(entry[1]),
         0,
@@ -98,9 +104,15 @@ describe("Action", () => {
       // Validate copied files
       const copiedFiles = outputs.getSavedOutput("copiedFiles");
       const copiedFilesArray = copiedFiles
+        .trim()
         .split("\n")
         .slice(2)
-        .map(line => line.split("|").map(cell => cell.trim()));
+        .map(line =>
+          line
+            .split("|")
+            .map(cell => cell.trim())
+            .filter(cell => cell !== ""),
+        );
       const totalFilesCopied = copiedFilesArray.reduce(
         (sum, entry) => sum + Number.parseInt(entry[1]),
         0,
