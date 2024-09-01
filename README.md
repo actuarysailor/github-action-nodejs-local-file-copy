@@ -12,6 +12,20 @@ A NodeJS GitHub action to search for files matching a regex pattern
 and copy them to another folder, with options to retain the
 directory structure or flatten it.
 <!-- action-docs-description source="action.yml" -->
+Copyright (C) 2024  actuarysailor
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 </p>
 
 <p align="center">
@@ -22,7 +36,7 @@ directory structure or flatten it.
   <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Test-Vitest_-yellow.svg" alt="swc"/></a>
 </p>
 
-<!-- action-docs-usage source="action-file.yml" project="actuarysailor/github-action-nodejs-local-file-copy" version="v0.11.0" x-release-please-version --> 
+<!-- action-docs-usage source="action-file.yml" project="actuarysailor/github-action-nodejs-local-file-copy" version="v0.11.1" x-release-please-version --> 
 ## 👀 Usage
 
 Bellow is a simple example how to use this action
@@ -42,7 +56,7 @@ jobs:
       - name: Github action template 🤩
         uses: actuarysailor/github-action-nodejs-local-file-copy@v0
 ```
-<!-- action-docs-usage source="action-file.yml" project="actuarysailor/github-action-nodejs-local-file-copy" version="v0.11.0" x-release-please-version --> 
+<!-- action-docs-usage source="action-file.yml" project="actuarysailor/github-action-nodejs-local-file-copy" version="v0.11.1" x-release-please-version --> 
 
 ## 💅 Customizing
 

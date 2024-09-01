@@ -1,3 +1,5 @@
+# Copyright (C) 2024 actuarysailor
+# For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 repository:
   name: github-action-nodejs-template
   description: Template for new Github Actions based on Typescript with the Best Practices and Ready to be Released
