@@ -1,5 +1,6 @@
 # Copyright (C) 2024 actuarysailor
-# For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
+# For license information, see:
+# https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 - name: 👀 Feature Requested
   description: Request for a feature
   color: 07D90A
