@@ -26711,6 +26711,8 @@ var external_node_fs_default = /*#__PURE__*/__nccwpck_require__.n(external_node_
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 var external_node_path_default = /*#__PURE__*/__nccwpck_require__.n(external_node_path_namespaceObject);
 ;// CONCATENATED MODULE: ./src/utils/sleep.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 const sleep = (milliseconds) => {
     return new Promise(resolve => {
         setTimeout(() => resolve(), milliseconds);
@@ -26718,6 +26720,8 @@ const sleep = (milliseconds) => {
 };
 
 ;// CONCATENATED MODULE: ./src/action.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 
 
@@ -26772,6 +26776,8 @@ class Action {
 }
 
 ;// CONCATENATED MODULE: ./src/logger/core-logger.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 class CoreLogger {
     debug(message) {
@@ -26786,6 +26792,8 @@ class CoreLogger {
 }
 
 ;// CONCATENATED MODULE: ./src/outputs/core-outputs.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 class CoreOutputs {
     save(name, value) {
@@ -26794,6 +26802,8 @@ class CoreOutputs {
 }
 
 ;// CONCATENATED MODULE: ./src/build-action.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 
 
@@ -26807,6 +26817,8 @@ const buildAction = () => {
 };
 
 ;// CONCATENATED MODULE: ./src/inputs/core-inputs.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 class CoreInputs {
     get sourceDirectory() {
@@ -26825,6 +26837,8 @@ class CoreInputs {
 }
 
 ;// CONCATENATED MODULE: ./src/index.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 
 

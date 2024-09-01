@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (C) 2024 actuarysailor
+# For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 check_typos_installed() {
     if ! command -v typos >/dev/null 2>&1; then

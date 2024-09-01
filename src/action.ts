@@ -1,3 +1,5 @@
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 import { default as fs } from "node:fs";
 import { default as path } from "node:path";
 
