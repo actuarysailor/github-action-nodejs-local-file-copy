@@ -26664,6 +26664,35 @@ module.exports = parseParams
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/compat get default export */
+/******/ (() => {
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__nccwpck_require__.n = (module) => {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__nccwpck_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__nccwpck_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
 /******/ /* webpack/runtime/compat */
 /******/ 
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
@@ -26675,7 +26704,15 @@ var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
+;// CONCATENATED MODULE: external "node:fs"
+const external_node_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs");
+var external_node_fs_default = /*#__PURE__*/__nccwpck_require__.n(external_node_fs_namespaceObject);
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+var external_node_path_default = /*#__PURE__*/__nccwpck_require__.n(external_node_path_namespaceObject);
 ;// CONCATENATED MODULE: ./src/utils/sleep.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 const sleep = (milliseconds) => {
     return new Promise(resolve => {
         setTimeout(() => resolve(), milliseconds);
@@ -26683,6 +26720,10 @@ const sleep = (milliseconds) => {
 };
 
 ;// CONCATENATED MODULE: ./src/action.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
+
+
 
 class Action {
     logger;
@@ -26692,18 +26733,51 @@ class Action {
         this.outputs = dependencies.outputs;
     }
     async run(inputs) {
-        this.logger.info("Running github-action-nodejs-template");
-        const name = inputs.name || "World";
-        const message = `Hello ${name}`;
-        this.logger.info(message);
+        const fileFilter = inputs.fileFilter || "**/*";
+        const sourceDirectory = inputs.sourceDirectory;
+        const destinationDirectory = inputs.destinationDirectory;
+        this.logger.info(`Copying files matching the pattern "${fileFilter}" from "${sourceDirectory}" to "${destinationDirectory}"`);
+        const files = external_node_fs_default().readdirSync(inputs.sourceDirectory, {
+            withFileTypes: true,
+        });
+        const copiedFiles = [];
+        for (const file of files) {
+            if (file.isFile() &&
+                (!inputs.fileFilter || new RegExp(inputs.fileFilter).test(file.name))) {
+                const sourcePath = external_node_path_default().join(file.path, file.name);
+                const destinationPath = inputs.flattenDirectories
+                    ? external_node_path_default().join(inputs.destinationDirectory, file.name)
+                    : external_node_path_default().join(inputs.destinationDirectory, external_node_path_default().relative(inputs.sourceDirectory, sourcePath));
+                const destinationDir = external_node_path_default().dirname(destinationPath);
+                if (!external_node_fs_default().existsSync(destinationDir)) {
+                    external_node_fs_default().mkdirSync(destinationDir, { recursive: true });
+                }
+                external_node_fs_default().copyFileSync(sourcePath, destinationPath);
+                this.logger.info(`Copied '${sourcePath}' to '${destinationPath}'`);
+                const existingEntry = copiedFiles.find(entry => entry.destinationPath === destinationPath);
+                if (existingEntry) {
+                    existingEntry.count += 1;
+                }
+                else {
+                    copiedFiles.push({ destinationPath: destinationPath, count: 1 });
+                }
+            }
+        }
+        // Generate markdown table
+        let markdownTable = "| Destination Path | Files Copied |\n| --- | --- |\n";
+        for (const entry of copiedFiles) {
+            markdownTable += `| ${entry.destinationPath} | ${entry.count} |\n`;
+        }
+        this.outputs.save("copiedFiles", markdownTable);
+        this.logger.info("Files copied:\n" + markdownTable);
         await sleep(3000);
-        this.logger.info("Change: 10");
-        this.outputs.save("message", message);
         this.logger.info("Finished github-action-nodejs-template");
     }
 }
 
 ;// CONCATENATED MODULE: ./src/logger/core-logger.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 class CoreLogger {
     debug(message) {
@@ -26718,6 +26792,8 @@ class CoreLogger {
 }
 
 ;// CONCATENATED MODULE: ./src/outputs/core-outputs.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 class CoreOutputs {
     save(name, value) {
@@ -26726,6 +26802,8 @@ class CoreOutputs {
 }
 
 ;// CONCATENATED MODULE: ./src/build-action.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 
 
@@ -26739,14 +26817,28 @@ const buildAction = () => {
 };
 
 ;// CONCATENATED MODULE: ./src/inputs/core-inputs.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 class CoreInputs {
-    get name() {
-        return (0,core.getInput)("name") || undefined;
+    get sourceDirectory() {
+        return (0,core.getInput)("source-directory", { required: true });
+    }
+    get destinationDirectory() {
+        return (0,core.getInput)("destination-directory", { required: true });
+    }
+    get fileFilter() {
+        return (0,core.getInput)("file-filter") || undefined;
+    }
+    get flattenDirectories() {
+        const input = (0,core.getInput)("flatten-directories");
+        return input ? input.toLowerCase() === "true" : false;
     }
 }
 
 ;// CONCATENATED MODULE: ./src/index.ts
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 
 

@@ -1,3 +1,5 @@
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 import { createMock } from "@/tests/utils/mock";
 
 import { Logger } from "@/src/logger/logger";

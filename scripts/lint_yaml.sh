@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (C) 2024 actuarysailor
+# For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 
 if ! command -v yamllint >/dev/null 2>&1; then
     echo "YamlLint CLI tool is not installed, aborting yaml linter."

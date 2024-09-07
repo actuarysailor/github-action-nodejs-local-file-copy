@@ -1,3 +1,5 @@
+# Copyright (C) 2024 actuarysailor
+# For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 name: 'Lint GitHub Actions workflows'
 
 on:
@@ -9,10 +11,12 @@ jobs:
     steps:
       - name: Checkout 🛬
         uses: actions/checkout@v4
+
       - name: Download actionlint ⚙️
         id: get_actionlint
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.26
         shell: bash
+
       - name: Check workflow files 💅🏻
         run: ${{ steps.get_actionlint.outputs.executable }} -color
         shell: bash
