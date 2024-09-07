@@ -1,15 +1,15 @@
-import { createMock } from "@/tests/utils/mock";
-
+// Copyright (C) 2024 actuarysailor
+// For license information, see https://github.com/actuarysailor/github-action-nodejs-local-file-copy/blob/main/LICENSE
 import { Outputs } from "@/src/outputs/outputs";
 
 export class OutputsMock implements Outputs {
-  private readonly mock = createMock<Outputs>();
+  private outputs: { [key: string]: string } = {};
 
-  save(name: string, value: unknown) {
-    this.mock.save(name, value);
+  save(key: string, value: string) {
+    this.outputs[key] = value;
   }
 
-  assertSaveToHaveBeenCalledWith(name: string, value: unknown): void {
-    expect(this.mock.save).toHaveBeenCalledWith(name, value);
+  getSavedOutput(key: string): string {
+    return this.outputs[key];
   }
 }

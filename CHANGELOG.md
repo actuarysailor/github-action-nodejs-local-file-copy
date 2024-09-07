@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/actuarysailor/github-action-nodejs-local-file-copy/compare/v0.11.0...v0.11.1) (2024-09-01)
+
+
+### 🐛 Bug Fixes
+
+* Dependency conflict ([71385bb](https://github.com/actuarysailor/github-action-nodejs-local-file-copy/commit/71385bb120a18dead478e92d1a1ed8d627378834))
+
 ## [0.11.0](https://github.com/AlbertHernandez/github-action-nodejs-template/compare/v0.10.2...v0.11.0) (2024-07-14)
 
 
