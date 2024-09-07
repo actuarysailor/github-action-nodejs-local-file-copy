@@ -5,7 +5,7 @@ import * as core from "@actions/core";
 import { buildAction } from "./build-action";
 import { CoreInputs } from "./inputs/core-inputs";
 
-const run = async () => {
+export const run = async () => {
   try {
     const action = buildAction();
     const inputs = new CoreInputs();
