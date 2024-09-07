@@ -8,9 +8,11 @@ on:
 
 jobs:
   label:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Add conventional labels 🧧
-        uses: bcoe/conventional-release-labels@v1
+        uses: bcoe/conventional-release-labels@v1.3.1
         with:
           type_labels: '{"feat": "🚀 Feature", "fix": "🕵🏻 Fix", "breaking": "⚠️ Breaking Change"}'
